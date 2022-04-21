@@ -26,7 +26,7 @@ class Utils {
 
     }
 
-    public static function sendMail($to,$subject,$body,$files=null, $from=null, $fromName=null) {
+    public static function sendMail($to,$subject,$body,$files=null, $from=null, $fromName=null, $replyTo=null) {
         $mail = new PHPMailer(true);
         $settingsModel = new SettingModel();
         $settings = $settingsModel->getSettings('mail_smtp_user','mail_smtp_port','mail_smtp_password','mail_smtp_host','mail_smtp_fromname','mail_smtp_frommail');
@@ -44,6 +44,10 @@ class Utils {
         $mail->Subject = $subject;
         $mail->Body = $body;
         $mail->AltBody = strip_tags($body);
+
+        if ( $replyTo) {
+            $mail->addReplyTo($replyTo, $fromName ? $fromName: $settings['mail_smtp_fromname']);
+        }
 
         if ( $files ) {
             foreach ($files as $key => $file) {
