@@ -46,7 +46,7 @@ class User extends RestController
                 <p>Si la demande de récupération n'a pas été effectuée par vous, vous pouvez ignorer ce message.</p>
             
             ");
-            Application::$instance->getCurrentUserModel()->writeUserLog('INFO', 'Password Renew Asked', $user['id']);
+            //Application::$instance->getCurrentUserModel()->writeUserLog('INFO', 'Password Renew Asked', $user['id']);
             
 
         }
@@ -66,7 +66,7 @@ class User extends RestController
             $password = hash('SHA256', $body->password);
             $hash = hash('SHA256', uniqid());
             $this->getModel()->patch($user['id'], ['password' => $password, 'hash' => $hash]);
-            Application::$instance->getCurrentUserModel()->writeUserLog('INFO', 'Password Renewed', $user['id']);
+            //Application::$instance->getCurrentUserModel()->writeUserLog('INFO', 'Password Renewed', $user['id']);
 
             return true;
         } else {
