@@ -37,13 +37,13 @@ class User extends RestController
         if ($user) {
             $hash = hash('SHA256', uniqid());
             $this->getModel()->patch($user['id'], ['hash' => $hash]);
-            Utils::sendMail($body->email, 'Reset password confirmation', "
+            Utils::sendMail($body->email, 'Changement de mot de passe', "
             
-                <p>Hello</p>
-                <p>Someone (Probably you) asked to reset your password. Please follow <a href=\"".$this->getLinkReset($hash)."\">this link</a> to reset your password. 
-                If you cannot click on the link, copy paste the link below: </p>
+                <p>Bonjour</p>
+                <p>Vous avez effectué une demande de récupération de mot passe. Veuillez suivre <a href=\"".$this->getLinkReset($hash)."\">ce lien</a> pour définir un nouveau mot de passe. 
+                Si vous ne pouvez pas cliquer sur le lien, veuillez copier-coller l'URL suivante dans un navigateur:</p>
                 <p>".$this->getLinkReset($hash)."</p>
-                <p>If you didn't ask a password reset, please ignore this message.</p>
+                <p>Si la demande de récupération n'a pas été effectuée par vous, vous pouvez ignorer ce message.</p>
             
             ");
             Application::$instance->getCurrentUserModel()->writeUserLog('INFO', 'Password Renew Asked', $user['id']);
